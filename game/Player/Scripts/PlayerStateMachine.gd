@@ -78,7 +78,6 @@ func hurt_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("hurt")
 	Player.HurtTimer.start()
-	Player.PlayerMovement.knockback()
 func hurt_exit(): pass
 func hurt_update():
 	Player.PlayerMovement.knockback_update()
@@ -110,6 +109,7 @@ func hit_enemy(body):
 	if (body.is_in_group("enemy") && not invin):
 		invin = true
 		set_current_state("hurt")
+		Player.PlayerMovement.knockback(body.StateMachine.dir)
 		
 func hurt_timout():
 	set_current_state("idle")

@@ -11,6 +11,9 @@ var MAXGRAVITY = 10
 var JUMP_HEIGHT = 128
 var JUMP = sqrt(GRAVITY * JUMP_HEIGHT)
 
+var KNOCKUP = 3
+var KNOCKBACK = 1
+
 onready var SPRITE_WIDTH = Player.PlayerMask.get_texture().get_width()
 onready var SPRITE_HEIGHT = Player.PlayerMask.get_texture().get_height()
 onready var SIDE_WIDTH = 48
@@ -38,11 +41,18 @@ func roll_update():
 	stop_outside_room()
 	
 func knockback_update():
+	if (on_ground):
+		velocity.x = 0
+	else: 
+		velocity.y += GRAVITY
+	velocity.y = min(velocity.y, MAXGRAVITY)
 	Player.move(velocity)
 	stop_outside_room()
 	
-func knockback():
-	pass
+func knockback(dir):
+	velocity.x = KNOCKBACK * dir
+	velocity.y = -KNOCKUP
+	on_ground = false
 	
 func calc_velocity():
 	var input = (Input.is_action_pressed("key_right") - 

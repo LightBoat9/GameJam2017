@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 onready var ArrowSprite = get_node("ArrowSprite")
+onready var ArrowArea = get_node("ArrowArea")
 
 var velocity = Vector2(0,-1)
 var MOVESPEED = 15
@@ -9,6 +10,7 @@ var GRAVITY = 0.05
 var dir = 1
 
 func _ready():
+	ArrowArea.connect("body_enter", self, "enemy_enter")
 	ArrowSprite.set_flip_h(dir == -1)
 	set_process(true)
 	
@@ -25,4 +27,9 @@ func outside_view():
 	var p = get_pos()
 	var s = get_viewport_rect().size
 	if (p.x > s.x || p.x < 0):
+		queue_free()
+	
+func enemy_enter(body):
+	if (body.is_in_group("enemy")):
+		body.StateMachine.set_current_state("hurt")
 		queue_free()
