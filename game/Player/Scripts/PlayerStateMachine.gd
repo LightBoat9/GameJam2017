@@ -81,7 +81,7 @@ func hurt_enter():
 	Player.PlayerMovement.knockback()
 func hurt_exit(): pass
 func hurt_update():
-	Player.PlayerMovement.kockback_update()
+	Player.PlayerMovement.knockback_update()
 	
 func frame_changed():
 	var a = Player.PlayerSprites.get_animation()
