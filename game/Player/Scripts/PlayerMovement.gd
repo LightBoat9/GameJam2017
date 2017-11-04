@@ -29,6 +29,11 @@ func update():
 	stop_outside_room()
 	jumping()
 	
+func roll_update():
+	roll_velocity()
+	Player.move(velocity)
+	stop_outside_room()
+	
 func calc_velocity():
 	var input = (Input.is_action_pressed("key_right") - 
 				Input.is_action_pressed("key_left"))
@@ -37,6 +42,13 @@ func calc_velocity():
 	
 	if (!on_ground): velocity.y += GRAVITY
 	velocity.y = min(velocity.y, MAXGRAVITY)
+	
+func roll_velocity():
+	velocity.x = lerp(velocity.x, MAXSPEED * Player.PlayerGraphics.dir, MOVESPEED)
+	
+	if (!on_ground): velocity.y += GRAVITY
+	velocity.y = min(velocity.y, MAXGRAVITY)
+	
 	
 func stop_outside_room():
 	var pos = Player.get_pos()

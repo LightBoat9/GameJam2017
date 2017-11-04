@@ -1,7 +1,7 @@
 extends "res://Global/StateMachine.gd"
 
 func _ready():
-	Player.PlayerSprites.connect("finished", self, "roll_end")
+	Player.PlayerSprites.connect("frame_changed", self, "roll_frame_changed")
 	set_current_state("idle")
 	
 func idle_enter(): Player.PlayerSprites.set_animation("idle")
@@ -45,10 +45,12 @@ func roll_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("roll")
 func roll_exit(): pass
-func roll_update(): pass
-	
-func roll_end():
-	set_current_state("idle")
+func roll_update():
+	Player.PlayerMovement.roll_update()
+		
+func roll_frame_changed():
+	if (Player.PlayerSprites.get_frame() == 0):
+		set_current_state("idle")
 	
 func _is_moving():
 	if (Input.is_action_pressed("key_right") or
