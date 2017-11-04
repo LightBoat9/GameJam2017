@@ -3,8 +3,11 @@ extends "res://Global/StateMachine.gd"
 var PlayerArrow = load("res://Player/Arrow/PlayerArrow.tscn")
 var arrow_offset = Vector2(24, -12)
 
+var invin = false
+
 func _ready():
-	Player.Player
+	Player.HurtTimer.connect("timeout", self, "hurt_timout")
+	Player.PlayerArea.connect("body_enter", self, "hit_enemy")
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
 	set_current_state("idle")
 	
@@ -58,7 +61,9 @@ func jump_update():
 func roll_enter(): 
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("roll")
-func roll_exit(): pass
+	invin = true
+func roll_exit():
+	invin = false
 func roll_update():
 	Player.PlayerMovement.roll_update()
 		
@@ -68,6 +73,15 @@ func shoot_enter():
 	Player.PlayerMovement.stop_moving()
 func shoot_exit(): pass
 func shoot_update(): pass
+	
+func hurt_enter():
+	Player.PlayerSprites.set_frame(0)
+	Player.PlayerSprites.set_animation("hurt")
+	Player.HurtTimer.start()
+	Player.PlayerMovement.knockback()
+func hurt_exit(): pass
+func hurt_update():
+	Player.PlayerMovement.kockback_update()
 	
 func frame_changed():
 	var a = Player.PlayerSprites.get_animation()
@@ -91,3 +105,11 @@ func _is_moving():
 		Input.is_action_pressed("key_left")):
 			return true
 	return false
+	
+func hit_enemy(body):
+	if (body.is_in_group("enemy") && not invin):
+		invin = true
+		set_current_state("hurt")
+		
+func hurt_timout():
+	set_current_state("idle")

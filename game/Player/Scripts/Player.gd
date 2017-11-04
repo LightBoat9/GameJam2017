@@ -1,11 +1,13 @@
 extends "res://Global/Object.gd"
 
-onready var PlayerSprites = get_node("PlayerSprites") setget set_private, get_player_sprites
-onready var PlayerMask = get_node("PlayerMask") setget set_private, get_player_mask
+onready var PlayerSprites = get_node("PlayerSprites") setget set_private
+onready var PlayerMask = get_node("PlayerMask") setget set_private
+onready var PlayerArea = get_node("PlayerArea") setget set_private
+onready var HurtTimer = get_node("HurtTimer") setget set_private
 
-var PlayerGraphics = load("res://Player/Scripts/PlayerGraphics.gd").new() setget set_private, get_player_graphics
-var PlayerMovement = load("res://Player/Scripts/PlayerMovement.gd").new() setget set_private, get_player_movement
-var PlayerStateMachine = load("res://Player/Scripts/PlayerStateMachine.gd").new() setget set_private, get_player_state_machine
+var PlayerGraphics = load("res://Player/Scripts/PlayerGraphics.gd").new() setget set_private
+var PlayerMovement = load("res://Player/Scripts/PlayerMovement.gd").new() setget set_private
+var PlayerStateMachine = load("res://Player/Scripts/PlayerStateMachine.gd").new() setget set_private
 
 func _ready():
 	add_child(PlayerGraphics)
@@ -15,18 +17,3 @@ func _ready():
 func set_private(value):
 	print("trying to assign " + str(value) + 
 		" to a private variable, nothing changed")
-	
-func get_player_movement():
-	return PlayerMovement
-	
-func get_player_graphics():
-	return PlayerGraphics
-	
-func get_player_state_machine():
-	return PlayerStateMachine
-	
-func get_player_sprites():
-	return PlayerSprites
-	
-func get_player_mask():
-	return PlayerMask

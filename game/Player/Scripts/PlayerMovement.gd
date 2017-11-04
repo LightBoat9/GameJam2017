@@ -37,6 +37,10 @@ func roll_update():
 	Player.move(velocity)
 	stop_outside_room()
 	
+func knockback_update():
+	Player.move_velocity()
+	stop_outside_room()
+	
 func calc_velocity():
 	var input = (Input.is_action_pressed("key_right") - 
 				Input.is_action_pressed("key_left"))
