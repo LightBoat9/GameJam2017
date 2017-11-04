@@ -49,7 +49,6 @@ func roll_velocity():
 	if (!on_ground): velocity.y += GRAVITY
 	velocity.y = min(velocity.y, MAXGRAVITY)
 	
-	
 func stop_outside_room():
 	var pos = Player.get_pos()
 	pos.x = clamp(pos.x + velocity.x, screen_left, screen_right)
@@ -57,6 +56,10 @@ func stop_outside_room():
 	on_ground = pos.y == screen_bot
 	if (on_ground): velocity.y = 0
 	Player.set_pos(pos)
+	
+func stop_moving():
+	velocity.x = 0
+	velocity.y = 0
 	
 func jumping():
 	if (on_ground && Input.is_action_pressed("key_jump")):

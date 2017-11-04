@@ -61,11 +61,14 @@ func roll_update():
 func shoot_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("shoot")
+	Player.PlayerMovement.stop_moving()
 func shoot_exit(): pass
-func shoot_update(): pass
+func shoot_update():
 	
 func frame_changed():
 	var a = Player.PlayerSprites.get_animation()
+	if (a == "shoot"):
+		pass
 	if (a == "roll" || a == "shoot"):
 		if (Player.PlayerSprites.get_frame() == 0):
 			set_current_state("idle")
