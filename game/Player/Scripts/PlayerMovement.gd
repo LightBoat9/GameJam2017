@@ -11,8 +11,8 @@ var MAXGRAVITY = 10
 var JUMP_HEIGHT = 64
 var JUMP = sqrt(GRAVITY * JUMP_HEIGHT)
 
-onready var SPRITE_WIDTH = Player.get_player_sprite().get_texture().get_width()
-onready var SPRITE_HEIGHT = Player.get_player_sprite().get_texture().get_height()
+onready var SPRITE_WIDTH = Player.PlayerSprites.get_texture().get_width()
+onready var SPRITE_HEIGHT = Player.PlayerSprites.get_texture().get_height()
 onready var screen_left = 0
 onready var screen_right = get_viewport_rect().size.x - SPRITE_WIDTH
 onready var screen_top = 0
@@ -26,7 +26,7 @@ var velocity = Vector2()
 func update():
 	calc_velocity()
 	Player.move(velocity)
-	collision()
+	stop_outside_room()
 	jumping()
 	
 func calc_velocity():
@@ -38,7 +38,7 @@ func calc_velocity():
 	if (!on_ground): velocity.y += GRAVITY
 	velocity.y = min(velocity.y, MAXGRAVITY)
 	
-func collision():
+func stop_outside_room():
 	var pos = Player.get_pos()
 	pos.x = clamp(pos.x + velocity.x, screen_left, screen_right)
 	pos.y = clamp(pos.y + velocity.y, screen_top, screen_bot)

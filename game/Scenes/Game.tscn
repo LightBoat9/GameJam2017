@@ -11,6 +11,6 @@ transform/pos = Vector2( 307.248, 311.222 )
 
 [node name="Floor" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( -126.378, 446.887 )
+transform/pos = Vector2( -123.054, 493.424 )
 
 
