@@ -13,11 +13,14 @@ var JUMP = sqrt(GRAVITY * JUMP_HEIGHT)
 
 onready var SPRITE_WIDTH = Player.PlayerMask.get_texture().get_width()
 onready var SPRITE_HEIGHT = Player.PlayerMask.get_texture().get_height()
-onready var screen_left = 0
-onready var screen_right = get_viewport_rect().size.x - SPRITE_WIDTH
-onready var screen_top = 0
-onready var FLOOR_HEIGHT = 0
-onready var screen_bot = get_viewport_rect().size.y - SPRITE_HEIGHT - FLOOR_HEIGHT
+onready var SIDE_WIDTH = 48
+onready var screen_left = 0 + SIDE_WIDTH + SPRITE_WIDTH/2
+onready var screen_right = get_viewport_rect().size.x - SPRITE_WIDTH/2 - SIDE_WIDTH
+
+onready var FLOOR_HEIGHT = 70
+onready var ROOF_HEIGHT = 0
+onready var screen_top = 0 - ROOF_HEIGHT + SPRITE_HEIGHT/2
+onready var screen_bot = get_viewport_rect().size.y - SPRITE_HEIGHT/2 - FLOOR_HEIGHT
 
 var on_ground = false
 

@@ -1,5 +1,8 @@
 extends "res://Global/StateMachine.gd"
 
+var PlayerArrow = load("res://Player/Arrow/PlayerArrow.tscn")
+var arrow_offset = Vector2(24, -12)
+
 func _ready():
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
 	set_current_state("idle")
@@ -68,10 +71,19 @@ func shoot_update(): pass
 func frame_changed():
 	var a = Player.PlayerSprites.get_animation()
 	if (a == "shoot"):
-		pass
+		if (Player.PlayerSprites.get_frame() == 1):
+			spawn_player_arrow()
 	if (a == "roll" || a == "shoot"):
 		if (Player.PlayerSprites.get_frame() == 0):
 			set_current_state("idle")
+	
+func spawn_player_arrow():
+	var inst = PlayerArrow.instance()
+	inst.dir = Player.PlayerGraphics.dir
+	inst.set_pos(Vector2(Player.get_pos().x + 
+				(arrow_offset.x * Player.PlayerGraphics.dir), 
+				Player.get_pos().y + arrow_offset.y))
+	Game.add_child(inst)
 	
 func _is_moving():
 	if (Input.is_action_pressed("key_right") or
