@@ -63,7 +63,7 @@ func shoot_enter():
 	Player.PlayerSprites.set_animation("shoot")
 	Player.PlayerMovement.stop_moving()
 func shoot_exit(): pass
-func shoot_update():
+func shoot_update(): pass
 	
 func frame_changed():
 	var a = Player.PlayerSprites.get_animation()
