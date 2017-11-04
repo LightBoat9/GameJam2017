@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=18 format=1]
 
 [ext_resource path="res://Player/Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Sprites/Hitbox/0.png" type="Texture" id=2]
@@ -13,6 +13,9 @@
 [ext_resource path="res://Player/Sprites/Walk/Bowman_00001.png" type="Texture" id=11]
 [ext_resource path="res://Player/Sprites/Walk/Bowman_00002.png" type="Texture" id=12]
 [ext_resource path="res://Player/Sprites/Walk/Bowman_00003.png" type="Texture" id=13]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00004.png" type="Texture" id=14]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00005.png" type="Texture" id=15]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00006.png" type="Texture" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -35,6 +38,11 @@ animations = [ {
 "frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "shoot",
 "speed": 5.0
 } ]
 
