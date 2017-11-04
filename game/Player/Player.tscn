@@ -4,19 +4,19 @@
 [ext_resource path="res://Player/Sprites/Hitbox/0.png" type="Texture" id=2]
 [ext_resource path="res://Player/Sprites/Idle/Bowman_00014.png" type="Texture" id=3]
 [ext_resource path="res://Player/Sprites/Hurt/Bowman_00013.png" type="Texture" id=4]
-[ext_resource path="res://Player/Sprites/Roll/Bowman_00010.png" type="Texture" id=5]
-[ext_resource path="res://Player/Sprites/Roll/Bowman_00011.png" type="Texture" id=6]
-[ext_resource path="res://Player/Sprites/Roll/Bowman_00012.png" type="Texture" id=7]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00000.png" type="Texture" id=8]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00001.png" type="Texture" id=9]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00002.png" type="Texture" id=10]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00003.png" type="Texture" id=11]
-[ext_resource path="res://Player/Sprites/Shoot/Bowman_00004.png" type="Texture" id=12]
-[ext_resource path="res://Player/Sprites/Shoot/Bowman_00005.png" type="Texture" id=13]
-[ext_resource path="res://Player/Sprites/Shoot/Bowman_00006.png" type="Texture" id=14]
-[ext_resource path="res://Player/Sprites/Jump/Bowman_00007.png" type="Texture" id=15]
-[ext_resource path="res://Player/Sprites/Jump/Bowman_00008.png" type="Texture" id=16]
-[ext_resource path="res://Player/Sprites/Jump/Bowman_00009.png" type="Texture" id=17]
+[ext_resource path="res://Player/Sprites/Jump/Bowman_00007.png" type="Texture" id=5]
+[ext_resource path="res://Player/Sprites/Jump/Bowman_00008.png" type="Texture" id=6]
+[ext_resource path="res://Player/Sprites/Jump/Bowman_00009.png" type="Texture" id=7]
+[ext_resource path="res://Player/Sprites/Roll/Bowman_00010.png" type="Texture" id=8]
+[ext_resource path="res://Player/Sprites/Roll/Bowman_00011.png" type="Texture" id=9]
+[ext_resource path="res://Player/Sprites/Roll/Bowman_00012.png" type="Texture" id=10]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00004.png" type="Texture" id=11]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00005.png" type="Texture" id=12]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00006.png" type="Texture" id=13]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00000.png" type="Texture" id=14]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00001.png" type="Texture" id=15]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00002.png" type="Texture" id=16]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00003.png" type="Texture" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -32,23 +32,23 @@ animations = [ {
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "roll",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "shoot",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
-"loop": false,
-"name": "jump",
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "walk",
 "speed": 5.0
 } ]
 

@@ -32,4 +32,5 @@ func outside_view():
 func enemy_enter(body):
 	if (body.is_in_group("enemy")):
 		body.StateMachine.set_current_state("hurt")
+		body.StateMachine.knockback(dir)
 		queue_free()

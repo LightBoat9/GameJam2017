@@ -3,7 +3,8 @@ extends "res://Global/StateMachine.gd"
 var PlayerArrow = load("res://Player/Arrow/PlayerArrow.tscn")
 var arrow_offset = Vector2(24, -12)
 
-var invin = false
+var roll_invin = false
+var hit_invin = false
 
 func _ready():
 	Player.HurtTimer.connect("timeout", self, "hurt_timout")
@@ -61,9 +62,9 @@ func jump_update():
 func roll_enter(): 
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("roll")
-	invin = true
+	roll_invin = true
 func roll_exit():
-	invin = false
+	roll_invin = false
 func roll_update():
 	Player.PlayerMovement.roll_update()
 		
@@ -106,10 +107,11 @@ func _is_moving():
 	return false
 	
 func hit_enemy(body):
-	if (body.is_in_group("enemy") && not invin):
-		invin = true
-		set_current_state("hurt")
-		Player.PlayerMovement.knockback(body.StateMachine.dir)
+	if (not hit_invin && not roll_invin):
+		if (body.is_in_group("enemy") && not body.is_dead):
+			hit_invin = true
+			set_current_state("hurt")
+			Player.PlayerMovement.knockback(body.StateMachine.dir)
 		
 func hurt_timout():
 	set_current_state("idle")

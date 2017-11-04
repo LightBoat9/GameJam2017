@@ -2,6 +2,9 @@ extends "res://Global/Object.gd"
 
 onready var ManmothCollision = get_node("ManmothCollision")
 onready var ManmothSprites = get_node("ManmothSprites")
+onready var ManmothHitbox = get_node("ManmothHitbox")
+
+var is_dead = false
 
 var StateMachine = (
 	load("res://Enemies/Manmoth/Scripts/ManmothStateMachine.gd").new()) setget set_private
