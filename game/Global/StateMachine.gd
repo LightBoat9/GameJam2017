@@ -8,6 +8,7 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	print(current_state)
 	if (current_state != null):
 		call_deferred(current_state + "_update")
 	

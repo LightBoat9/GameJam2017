@@ -1,6 +1,6 @@
 extends "res://Global/StateMachine.gd"
 
-var STATE = ["idle", "walk", ]
+var STATE = ["idle", "walk", "jump"]
 
 func _ready():
 	set_current_state(STATE[STATE.find("idle")])
@@ -11,7 +11,7 @@ func idle_update():
 	if (_is_moving()):
 		set_current_state(STATE[STATE.find("walk")])
 	if (!Player.PlayerMovement.on_ground):
-		pass
+		set_current_state(STATE[STATE.find("jump")])
 	
 	Player.PlayerMovement.update()
 	Player.PlayerGraphics.update()
@@ -20,6 +20,15 @@ func walk_enter(): Player.PlayerSprites.set_animation("walk")
 func walk_exit(): pass
 func walk_update():
 	if (!_is_moving()):
+		set_current_state(STATE[STATE.find("idle")])
+	
+	Player.PlayerMovement.update()
+	Player.PlayerGraphics.update()
+	
+func jump_enter(): Player.PlayerSprites.set_animation("jump")
+func jump_exit(): pass
+func jump_update():
+	if (Player.PlayerMovement.on_ground):
 		set_current_state(STATE[STATE.find("idle")])
 	
 	Player.PlayerMovement.update()
