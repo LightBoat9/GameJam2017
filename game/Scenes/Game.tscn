@@ -1,40 +1,75 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Environment/stage/side_curtains.png" type="Texture" id=2]
-[ext_resource path="res://Environment/stage/floor.png" type="Texture" id=3]
-[ext_resource path="res://Environment/stage/curtains_back.png" type="Texture" id=4]
-[ext_resource path="res://Enemies/Manmoth/EnemyManmoth.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Environment/scripts/Act_manager.gd" type="Script" id=2]
+[ext_resource path="res://Environment/scripts/curtain_states.gd" type="Script" id=3]
+[ext_resource path="res://Environment/stage/side_curtains.png" type="Texture" id=4]
+[ext_resource path="res://Environment/stage/curtains_back.png" type="Texture" id=5]
+[ext_resource path="res://Environment/stage/floor.png" type="Texture" id=6]
+[ext_resource path="res://Environment/scene 1/backdrop_1_sky.png" type="Texture" id=7]
+[ext_resource path="res://Environment/scene 1/backdrop_1_wall.png" type="Texture" id=8]
+[ext_resource path="res://Environment/scene 2/throwaway.png" type="Texture" id=9]
+[ext_resource path="res://Enemies/Manmoth/EnemyManmoth.tscn" type="PackedScene" id=10]
 
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
-transform/pos = Vector2( 303.924, 195.986 )
+transform/pos = Vector2( 294.005, 319.791 )
+z/z = 1
 
-[node name="Environment" type="Node" parent="."]
+[node name="Environment" type="Node2D" parent="."]
 
-[node name="Stage" type="Node" parent="Environment"]
+script/script = ExtResource( 2 )
+
+[node name="Stage" type="Node2D" parent="Environment"]
+
+script/script = ExtResource( 3 )
 
 [node name="curtains_side" type="Sprite" parent="Environment/Stage"]
 
 z/z = 2
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
+offset = Vector2( 400, 225 )
+
+[node name="curtains_back" type="Sprite" parent="Environment/Stage"]
+
+z/z = -1
+texture = ExtResource( 5 )
 offset = Vector2( 400, 225 )
 
 [node name="stage_floor" type="Sprite" parent="Environment/Stage"]
 
 z/z = -2
-texture = ExtResource( 3 )
+texture = ExtResource( 6 )
 offset = Vector2( 400, 225 )
 
-[node name="Sprite" type="Sprite" parent="Environment/Stage"]
+[node name="Act1" type="Node2D" parent="Environment"]
 
-z/z = -1
-texture = ExtResource( 4 )
-offset = Vector2( 400, 225 )
+[node name="Act1_background" type="Sprite" parent="Environment/Act1"]
 
-[node name="EnemyManmoth" parent="." instance=ExtResource( 5 )]
+z/z = -4
+texture = ExtResource( 7 )
+offset = Vector2( 400, 255 )
+
+[node name="Act1_wall" type="Sprite" parent="Environment/Act1"]
+
+z/z = -3
+texture = ExtResource( 8 )
+centered = false
+
+[node name="Act2" type="Node2D" parent="Environment"]
+
+editor/display_folded = true
+visibility/visible = false
+
+[node name="Act2_throwaway" type="Sprite" parent="Environment/Act2"]
+
+z/z = -3
+texture = ExtResource( 9 )
+centered = false
+
+[node name="EnemyManmoth" parent="." instance=ExtResource( 10 )]
 
 transform/pos = Vector2( 650.556, 330.791 )
 
