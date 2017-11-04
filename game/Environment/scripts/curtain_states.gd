@@ -4,7 +4,7 @@ var raised = false
 var minY; var maxY
 var curtains
 var rate = 4
-
+var delay_default = 30; var delay_current = 0
 var environ
 
 func _ready():
@@ -21,11 +21,14 @@ func move(offset):
 	curtains.set_offset(pos)
 	return (minY==pos.y || maxY==pos.y)
 
-func idle_enter(): pass
+func idle_enter(): if !raised: delay_current = delay_default
 func idle_update():
 	if Input.is_action_pressed("ui_up"):
-		if !raised: set_current_state("raise")
-		else : set_current_state("lower")
+		if raised: set_current_state("lower")
+		return
+	if !raised:
+		if delay_current>=0: delay_current-=1
+		else: set_current_state("raise")
 func idle_exit(): pass
 
 func raise_enter(): pass
