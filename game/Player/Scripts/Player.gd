@@ -1,7 +1,6 @@
 extends "res://Global/Object.gd"
 
 onready var PlayerSprites = get_node("PlayerSprites") setget set_private, get_player_sprites
-onready var PlayerMask = get_node("PlayerMask") setget set_private, get_player_mask
 
 var PlayerGraphics = load("res://Player/Scripts/PlayerGraphics.gd").new() setget set_private, get_player_graphics
 var PlayerMovement = load("res://Player/Scripts/PlayerMovement.gd").new() setget set_private, get_player_movement
@@ -27,6 +26,3 @@ func get_player_state_machine():
 	
 func get_player_sprites():
 	return PlayerSprites
-	
-func get_player_mask():
-	return PlayerMask

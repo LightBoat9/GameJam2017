@@ -11,8 +11,8 @@ var MAXGRAVITY = 10
 var JUMP_HEIGHT = 64
 var JUMP = sqrt(GRAVITY * JUMP_HEIGHT)
 
-onready var SPRITE_WIDTH = Player.PlayerMask.get_texture().get_width()
-onready var SPRITE_HEIGHT = Player.PlayerMask.get_texture().get_height()
+onready var SPRITE_WIDTH = Player.PlayerSprites.get_texture().get_width()
+onready var SPRITE_HEIGHT = Player.PlayerSprites.get_texture().get_height()
 onready var screen_left = 0
 onready var screen_right = get_viewport_rect().size.x - SPRITE_WIDTH
 onready var screen_top = 0
