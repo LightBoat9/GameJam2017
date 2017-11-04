@@ -57,9 +57,7 @@ func knockback(dir):
 func calc_velocity():
 	var input = (Input.is_action_pressed("key_right") - 
 				Input.is_action_pressed("key_left"))
-	
 	velocity.x = lerp(velocity.x, MAXSPEED * input, MOVESPEED)
-	
 	if (!on_ground): velocity.y += GRAVITY
 	velocity.y = min(velocity.y, MAXGRAVITY)
 	

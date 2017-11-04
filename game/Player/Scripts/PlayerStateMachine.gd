@@ -6,11 +6,20 @@ var arrow_offset = Vector2(24, -12)
 var roll_invin = false
 var hit_invin = false
 
+var overlap_enemy = false
+var last_enemy_hit = null
+
 func _ready():
+	Player.BlinkTimer.connect("timeout", self,"invin_blink")
 	Player.HurtTimer.connect("timeout", self, "hurt_timout")
+	Player.InvinTimer.connect("timeout", self, "invin_timeout")
 	Player.PlayerArea.connect("body_enter", self, "hit_enemy")
+	Player.PlayerArea.connect("body_exit", self, "enemy_body_exit")
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
 	set_current_state("idle")
+	
+func _process(delta):
+	hurt_by_enemy()
 	
 func idle_enter(): Player.PlayerSprites.set_animation("idle")
 func idle_exit(): pass
@@ -106,12 +115,38 @@ func _is_moving():
 			return true
 	return false
 	
+func invin_blink():
+	if (hit_invin):
+		var ps = Player.PlayerSprites
+		if (ps.is_visible()): Player.PlayerSprites.hide()
+		else: Player.PlayerSprites.show()
+	else:
+		Player.BlinkTimer.stop()
+		Player.PlayerSprites.show()
+	
 func hit_enemy(body):
-	if (not hit_invin && not roll_invin):
-		if (body.is_in_group("enemy") && not body.is_dead):
+	if (body.is_in_group("enemy") && not body.is_dead):
+		overlap_enemy = true
+		last_enemy_hit = body
+	
+func enemy_body_exit(body):
+	if (last_enemy_hit == null):
+		overlap_enemy = false
+	elif (body == last_enemy_hit):
+		overlap_enemy = false
+	
+func hurt_by_enemy():
+	if (last_enemy_hit == null): return
+	if (overlap_enemy):
+		if (not hit_invin && not roll_invin):
 			hit_invin = true
+			Player.InvinTimer.start()
+			Player.BlinkTimer.start()
 			set_current_state("hurt")
-			Player.PlayerMovement.knockback(body.StateMachine.dir)
-		
+			Player.PlayerMovement.knockback(last_enemy_hit.StateMachine.dir)
+	
 func hurt_timout():
 	set_current_state("idle")
+	
+func invin_timeout():
+	hit_invin = false

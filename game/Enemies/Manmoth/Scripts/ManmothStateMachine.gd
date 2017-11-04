@@ -20,22 +20,29 @@ onready var screen_top = 0 - ROOF_HEIGHT + SPRITE_HEIGHT/2
 onready var screen_bot = get_viewport_rect().size.y - SPRITE_HEIGHT/2 - FLOOR_HEIGHT
 
 func _ready():
+	get_parent().HurtTimer.connect("timeout", self, "hurt_timeout")
 	set_current_state("walk")
 	
 func walk_enter(): pass
 func walk_exit(): pass
 func walk_update():
 	velocity.x = MOVESPEED * dir
+	if (!on_ground): velocity.y += GRAVITY
+	velocity.y = min(velocity.y, MAXGRAVITY)
 	get_parent().move(velocity)
 	stop_outside_room()
 	
 func hurt_enter(): 
 	get_parent().ManmothSprites.set_animation("hurt")
 	get_parent().is_dead = true
+	get_parent().HurtTimer.start()
 func hurt_exit(): pass
 func hurt_update():
 	knockback_update()
 	stop_outside_room()
+	
+func hurt_timeout():
+	get_parent().death()
 	
 func knockback_update():
 	if (on_ground):
@@ -48,7 +55,7 @@ func knockback_update():
 	
 func knockback(dir):
 	velocity.x = KNOCKBACK * dir
-	velocity.y = KNOCKUP
+	velocity.y = -KNOCKUP
 	on_ground = false
 	
 func stop_outside_room():

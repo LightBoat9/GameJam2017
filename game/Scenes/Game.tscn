@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemies/Manmoth/EnemyManmoth.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Environment/Environment.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Environment/Environment.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies/EnemySpawn/EnemySpawn.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
 
@@ -11,10 +11,10 @@
 transform/pos = Vector2( 294.005, 319.791 )
 z/z = 1
 
-[node name="EnemyManmoth" parent="." instance=ExtResource( 2 )]
+[node name="Environment" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 650.556, 330.791 )
+[node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
 
-[node name="Environment" parent="." instance=ExtResource( 3 )]
+transform/pos = Vector2( 966.735, 188.816 )
 
 
