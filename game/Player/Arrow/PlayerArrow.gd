@@ -14,8 +14,15 @@ func _ready():
 	
 func _process(delta):
 	calc_velocity()
+	outside_view()
 	move(velocity)
 	
 func calc_velocity():
 	velocity.x = MOVESPEED * dir
 	velocity.y += GRAVITY
+	
+func outside_view():
+	var p = get_pos()
+	var s = get_viewport_rect().size
+	if (p.x > s.x || p.x < 0):
+		queue_free()

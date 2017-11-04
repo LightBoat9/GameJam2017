@@ -4,6 +4,7 @@ var PlayerArrow = load("res://Player/Arrow/PlayerArrow.tscn")
 var arrow_offset = Vector2(24, -12)
 
 func _ready():
+	Player.Player
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
 	set_current_state("idle")
 	
