@@ -7,7 +7,7 @@
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
-transform/pos = Vector2( 307.248, 311.222 )
+transform/pos = Vector2( 303.924, 195.986 )
 
 [node name="Floor" parent="." instance=ExtResource( 2 )]
 

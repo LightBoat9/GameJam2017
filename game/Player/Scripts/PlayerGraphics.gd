@@ -5,6 +5,8 @@ var dir = 1
 func update():
 	if (_input_dir() != 0): 
 		dir = _input_dir()
+		Player.PlayerSprites.set_animation("walk")
+	
 	Player.PlayerSprites.set_flip_h(dir == -1)
 	
 func _input_dir():
