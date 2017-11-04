@@ -8,7 +8,7 @@ var MAXSPEED = 2
 var GRAVITY = 0.4
 var MAXGRAVITY = 10
 
-var JUMP_HEIGHT = 64
+var JUMP_HEIGHT = 128
 var JUMP = sqrt(GRAVITY * JUMP_HEIGHT)
 
 onready var SPRITE_WIDTH = Player.PlayerMask.get_texture().get_width()

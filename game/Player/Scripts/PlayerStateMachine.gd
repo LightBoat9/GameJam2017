@@ -8,10 +8,10 @@ func _ready():
 func idle_enter(): Player.PlayerSprites.set_animation("idle")
 func idle_exit(): pass
 func idle_update():
-	if (_is_moving()):
-		set_current_state(STATE[STATE.find("walk")])
 	if (!Player.PlayerMovement.on_ground):
 		set_current_state(STATE[STATE.find("jump")])
+	elif (_is_moving()):
+		set_current_state(STATE[STATE.find("walk")])
 	
 	Player.PlayerMovement.update()
 	Player.PlayerGraphics.update()
@@ -19,7 +19,9 @@ func idle_update():
 func walk_enter(): Player.PlayerSprites.set_animation("walk")
 func walk_exit(): pass
 func walk_update():
-	if (!_is_moving()):
+	if (!Player.PlayerMovement.on_ground):
+		set_current_state(STATE[STATE.find("jump")])
+	elif (!_is_moving()):
 		set_current_state(STATE[STATE.find("idle")])
 	
 	Player.PlayerMovement.update()
@@ -30,7 +32,9 @@ func jump_exit(): pass
 func jump_update():
 	if (Player.PlayerMovement.on_ground):
 		set_current_state(STATE[STATE.find("idle")])
-	
+		
+	Player.PlayerSprites.set_frame(sign(Player.PlayerMovement.velocity.y) + 1)
+		
 	Player.PlayerMovement.update()
 	Player.PlayerGraphics.update()
 	
