@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends "res://Global/Object.gd"
 
 onready var ArrowSprite = get_node("ArrowSprite")
 onready var ArrowArea = get_node("ArrowArea")
@@ -27,7 +27,7 @@ func outside_view():
 	var p = get_pos()
 	var s = get_viewport_rect().size
 	if (p.x > s.x || p.x < 0):
-		queue_free()
+		destroy()
 	
 func enemy_enter(body):
 	body = body.get_parent()
@@ -35,4 +35,7 @@ func enemy_enter(body):
 		if (not body.is_dead):
 			body.StateMachine.set_current_state("hurt")
 			body.StateMachine.knockback(dir)
-			queue_free()
+			destroy()
+			
+func destroy():
+	queue_free()

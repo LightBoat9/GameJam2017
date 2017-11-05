@@ -10,8 +10,8 @@ var OFFSET = 128
 enum ENEMY {MANMOTH, SPEARFISCHER}
 enum SIDE {LEFT, RIGHT}
 
-var RIGHT_SPAWN =  Vector2(864, 225)
-var LEFT_SPAWN =  Vector2(-64, 225)
+var RIGHT_SPAWN =  Vector2(800, 305)
+var LEFT_SPAWN =  Vector2(0, 305)
 
 func _ready():
 	SpawnTimer.start()

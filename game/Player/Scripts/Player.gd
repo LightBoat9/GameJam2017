@@ -1,22 +1,20 @@
 extends "res://Global/Object.gd"
 
-onready var PlayerSprites = get_node("PlayerSprites") setget set_private
-onready var PlayerMask = get_node("PlayerMask") setget set_private
-onready var PlayerArea = get_node("PlayerArea") setget set_private
-onready var HurtTimer = get_node("HurtTimer") setget set_private
-onready var InvinTimer = get_node("InvinTimer") setget set_private
-onready var BlinkTimer = get_node("BlinkTimer") setget set_private
-onready var RollTimer = get_node("RollTimer") setget set_private
+onready var PlayerSprites = get_node("PlayerSprites") 
+onready var PlayerMask = get_node("PlayerMask") 
+onready var PlayerArea = get_node("PlayerArea")
+onready var HurtTimer = get_node("HurtTimer")
+onready var InvinTimer = get_node("InvinTimer")
+onready var BlinkTimer = get_node("BlinkTimer") 
+onready var RollTimer = get_node("RollTimer")
+onready var ShootTimer = get_node("ShootTimer")
+onready var HUD = get_node("HUD")
 
-var PlayerGraphics = load("res://Player/Scripts/PlayerGraphics.gd").new() setget set_private
-var PlayerMovement = load("res://Player/Scripts/PlayerMovement.gd").new() setget set_private
-var PlayerStateMachine = load("res://Player/Scripts/PlayerStateMachine.gd").new() setget set_private
+var PlayerGraphics = load("res://Player/Scripts/PlayerGraphics.gd").new() 
+var PlayerMovement = load("res://Player/Scripts/PlayerMovement.gd").new() 
+var PlayerStateMachine = load("res://Player/Scripts/PlayerStateMachine.gd").new() 
 
 func _ready():
 	add_child(PlayerGraphics)
 	add_child(PlayerMovement)
 	add_child(PlayerStateMachine)
-	
-func set_private(value):
-	print("trying to assign " + str(value) + 
-		" to a private variable, nothing changed")

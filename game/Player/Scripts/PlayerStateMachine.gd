@@ -7,14 +7,20 @@ var can_roll = true
 var roll_invin = false
 var hit_invin = false
 
+var can_shoot = true
+
 var overlap_enemy = false
 var last_enemy_hit = null
+
+var hp = 3
+var max_hp = 3
 
 func _ready():
 	Player.BlinkTimer.connect("timeout", self,"invin_blink")
 	Player.HurtTimer.connect("timeout", self, "hurt_timout")
 	Player.InvinTimer.connect("timeout", self, "invin_timeout")
 	Player.RollTimer.connect("timeout", self, "roll_timeout")
+	Player.ShootTimer.connect("timeout", self, "shoot_timeout")
 	Player.PlayerArea.connect("body_enter", self, "enemy_body_enter")
 	Player.PlayerArea.connect("body_exit", self, "enemy_body_exit")
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
@@ -30,7 +36,7 @@ func idle_update():
 		set_current_state("jump")
 	elif (can_roll and Input.is_action_pressed("key_roll")):
 		set_current_state("roll")
-	elif(Input.is_action_pressed("key_shoot")):
+	elif(can_shoot and Input.is_action_pressed("key_shoot")):
 		set_current_state("shoot")
 	elif (_is_moving()):
 		set_current_state("walk")
@@ -45,7 +51,7 @@ func walk_update():
 		set_current_state("jump")
 	elif (can_roll and Input.is_action_pressed("key_roll")):
 		set_current_state("roll")
-	elif(Input.is_action_pressed("key_shoot")):
+	elif(can_shoot and Input.is_action_pressed("key_shoot")):
 		set_current_state("shoot")
 	elif (!_is_moving()):
 		set_current_state("idle")
@@ -88,7 +94,7 @@ func shoot_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("shoot")
 	Player.PlayerMovement.stop_moving()
-func shoot_exit(): pass
+func shoot_exit(): Player.ShootTimer.start()
 func shoot_update():
 	Player.PlayerMovement.knockback_update()
 	
@@ -96,6 +102,7 @@ func hurt_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("hurt")
 	Player.HurtTimer.start()
+	handle_hp()
 func hurt_exit(): pass
 func hurt_update():
 	Player.PlayerMovement.knockback_update()
@@ -103,9 +110,12 @@ func hurt_update():
 func frame_changed():
 	var a = Player.PlayerSprites.get_animation()
 	if (a == "shoot"):
-		if (Player.PlayerSprites.get_frame() == 1):
+		if (Player.PlayerSprites.get_frame() == 0):
+			set_current_state("idle")
+		elif (Player.PlayerSprites.get_frame() == 1):
+			can_shoot = false
 			spawn_player_arrow()
-	if (a == "roll" || a == "shoot"):
+	elif (a == "roll"):
 		if (Player.PlayerSprites.get_frame() == 0):
 			set_current_state("idle")
 	
@@ -134,7 +144,14 @@ func enemy_body_enter(body):
 	if (body.is_in_group("enemy") && not body.get_parent().is_dead):
 		overlap_enemy = true
 		last_enemy_hit = body.get_parent()
-	
+	elif (body.is_in_group("projectile")):
+		if (not hit_invin && not roll_invin):
+			set_current_state("hurt")
+			hit_invin = true
+			Player.InvinTimer.start()
+			Player.BlinkTimer.start()
+			Player.PlayerMovement.knockback(body.dir)
+		
 func enemy_body_exit(body):
 	if (last_enemy_hit == null):
 		overlap_enemy = false
@@ -145,6 +162,7 @@ func hurt_by_enemy():
 	if (last_enemy_hit == null): return
 	if (overlap_enemy):
 		if (not hit_invin && not roll_invin):
+			set_current_state("hurt")
 			hit_invin = true
 			Player.InvinTimer.start()
 			Player.BlinkTimer.start()
@@ -155,3 +173,16 @@ func hurt_timout():
 	
 func invin_timeout():
 	hit_invin = false
+	
+func shoot_timeout():
+	can_shoot = true
+	
+func handle_hp():
+	if (hp > 0): 
+		hp -= 1
+		Player.HUD.get_node("PlayerHearts").remove = true
+	if (hp <= 0): print("Player Died")
+	
+func heal():
+	hp = 3
+	Player.HUD.get_node("PlayerHearts").add = true

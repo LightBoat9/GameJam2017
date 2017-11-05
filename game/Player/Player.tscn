@@ -1,55 +1,56 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=21 format=1]
 
 [ext_resource path="res://Player/Scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://Player/Sprites/Hitbox/0.png" type="Texture" id=2]
-[ext_resource path="res://Player/Sprites/Idle/Bowman_00014.png" type="Texture" id=3]
-[ext_resource path="res://Player/Sprites/Jump/Bowman_00007.png" type="Texture" id=4]
-[ext_resource path="res://Player/Sprites/Jump/Bowman_00008.png" type="Texture" id=5]
-[ext_resource path="res://Player/Sprites/Jump/Bowman_00009.png" type="Texture" id=6]
-[ext_resource path="res://Player/Sprites/Shoot/Bowman_00004.png" type="Texture" id=7]
-[ext_resource path="res://Player/Sprites/Shoot/Bowman_00005.png" type="Texture" id=8]
-[ext_resource path="res://Player/Sprites/Shoot/Bowman_00006.png" type="Texture" id=9]
-[ext_resource path="res://Player/Sprites/Roll/Bowman_00010.png" type="Texture" id=10]
-[ext_resource path="res://Player/Sprites/Roll/Bowman_00011.png" type="Texture" id=11]
-[ext_resource path="res://Player/Sprites/Roll/Bowman_00012.png" type="Texture" id=12]
-[ext_resource path="res://Player/Sprites/Hurt/Bowman_00013.png" type="Texture" id=13]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00000.png" type="Texture" id=14]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00001.png" type="Texture" id=15]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00002.png" type="Texture" id=16]
-[ext_resource path="res://Player/Sprites/Walk/Bowman_00003.png" type="Texture" id=17]
+[ext_resource path="res://Player/HUD/PlayerHearts.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/Sprites/Hitbox/0.png" type="Texture" id=3]
+[ext_resource path="res://Player/Sprites/Idle/Bowman_00014.png" type="Texture" id=4]
+[ext_resource path="res://Player/Sprites/Roll/Bowman_00010.png" type="Texture" id=5]
+[ext_resource path="res://Player/Sprites/Roll/Bowman_00011.png" type="Texture" id=6]
+[ext_resource path="res://Player/Sprites/Roll/Bowman_00012.png" type="Texture" id=7]
+[ext_resource path="res://Player/Sprites/Hurt/Bowman_00013.png" type="Texture" id=8]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00000.png" type="Texture" id=9]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00001.png" type="Texture" id=10]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00002.png" type="Texture" id=11]
+[ext_resource path="res://Player/Sprites/Walk/Bowman_00003.png" type="Texture" id=12]
+[ext_resource path="res://Player/Sprites/Jump/Bowman_00007.png" type="Texture" id=13]
+[ext_resource path="res://Player/Sprites/Jump/Bowman_00008.png" type="Texture" id=14]
+[ext_resource path="res://Player/Sprites/Jump/Bowman_00009.png" type="Texture" id=15]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00004.png" type="Texture" id=16]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00005.png" type="Texture" id=17]
+[ext_resource path="res://Player/Sprites/Shoot/Bowman_00006.png" type="Texture" id=18]
 
 [sub_resource type="SpriteFrames" id=1]
 
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": false,
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
-"loop": false,
-"name": "jump",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "shoot",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "roll",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 13 ) ],
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "hurt",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
 "loop": true,
 "name": "walk",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": false,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "shoot",
+"speed": 4.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -66,10 +67,19 @@ collision/mask = 0
 collision/margin = 0.08
 script/script = ExtResource( 1 )
 
+[node name="HUD" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="PlayerHearts" parent="HUD" instance=ExtResource( 2 )]
+
 [node name="PlayerMask" type="Sprite" parent="."]
 
 visibility/visible = false
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="PlayerSprites" type="AnimatedSprite" parent="."]
 
@@ -87,8 +97,8 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-collision/layers = 2
-collision/mask = 2
+collision/layers = 6
+collision/mask = 6
 
 [node name="AreaCollision" type="CollisionShape2D" parent="PlayerArea"]
 
@@ -122,6 +132,13 @@ autostart = false
 
 process_mode = 1
 wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="ShootTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.1
 one_shot = true
 autostart = false
 

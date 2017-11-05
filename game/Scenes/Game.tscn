@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Scenes/Game.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Environment/Environment.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Enemies/EnemySpawn/EnemySpawn.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Enemies/Spearfischer/SpearFischer.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
 
@@ -22,9 +21,5 @@ collision/mask = 2
 [node name="EnemySpawn" parent="." instance=ExtResource( 4 )]
 
 transform/pos = Vector2( 864, 225 )
-
-[node name="SpearFischer" parent="." instance=ExtResource( 5 )]
-
-transform/pos = Vector2( 799.179, 306.865 )
 
 

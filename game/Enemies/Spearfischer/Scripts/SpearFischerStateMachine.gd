@@ -28,19 +28,28 @@ onready var screen_bot = get_viewport_rect().size.y - SPRITE_HEIGHT/2 - FLOOR_HE
 func _ready():
 	get_parent().Sprites.connect("frame_changed", self, "frame_changed")
 	get_parent().HurtTimer.connect("timeout", self, "hurt_timeout")
+	get_parent().ThrowTimer.connect("timeout", self, "throw_timeout")
 	set_current_state("leap")
 
 func leap_enter():
 	velocity = get_trajectory(LEAP_DIST * dir, LEAP_HEIGHT, LEAP_SPEED)
+func leap_exit(): pass
 func leap_update():
 	if (on_ground): set_current_state("attack")
-	
 	if (!on_ground): velocity.y += GRAVITY
 	velocity.y = min(velocity.y, MAXGRAVITY)
-	
 	get_parent().move(velocity)
 	stop_outside_room()
-func leap_exit(): pass
+	
+func idle_enter():
+	get_parent().ThrowTimer.start()
+func idle_exit(): pass
+func idle_update():
+	if (get_parent().Sprites.get_frame() == 0):
+		get_parent().Sprites.set_animation("idle")
+
+func throw_timeout():
+	set_current_state("attack")
 
 func hurt_enter():
 	get_parent().Sprites.set_animation("hurt")
@@ -88,6 +97,7 @@ func frame_changed():
 	if (a == "attack"):
 		if (get_parent().Sprites.get_frame() == 2):
 			spawn_spear()
+			set_current_state("idle")
 			
 func spawn_spear():
 	var inst = Spear.instance()
