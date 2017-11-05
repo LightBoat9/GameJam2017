@@ -6,6 +6,7 @@ onready var PlayerArea = get_node("PlayerArea") setget set_private
 onready var HurtTimer = get_node("HurtTimer") setget set_private
 onready var InvinTimer = get_node("InvinTimer") setget set_private
 onready var BlinkTimer = get_node("BlinkTimer") setget set_private
+onready var RollTimer = get_node("RollTimer") setget set_private
 
 var PlayerGraphics = load("res://Player/Scripts/PlayerGraphics.gd").new() setget set_private
 var PlayerMovement = load("res://Player/Scripts/PlayerMovement.gd").new() setget set_private

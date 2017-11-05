@@ -10,11 +10,13 @@
 
 transform/pos = Vector2( 294.005, 319.791 )
 z/z = 1
+collision/layers = 2
+collision/mask = 2
 
 [node name="Environment" parent="." instance=ExtResource( 2 )]
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 966.735, 188.816 )
+transform/pos = Vector2( 864, 225 )
 
 

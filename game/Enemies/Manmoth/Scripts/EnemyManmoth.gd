@@ -1,6 +1,5 @@
 extends "res://Enemies/Enemy.gd"
 
-onready var ManmothCollision = get_node("ManmothCollision")
 onready var ManmothSprites = get_node("ManmothSprites")
 onready var ManmothHitbox = get_node("ManmothHitbox")
 onready var HurtTimer = get_node("HurtTimer")
@@ -16,6 +15,10 @@ func _ready():
 func set_private(value):
 	print("trying to assign " + str(value) + 
 		" to a private variable, nothing changed")
+	
+func set_dir(value):
+	StateMachine.dir = value
+	get_node("ManmothSprites").set_flip_h(value == 1)
 	
 func death():
 	queue_free()

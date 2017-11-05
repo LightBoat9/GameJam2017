@@ -3,6 +3,7 @@ extends "res://Global/StateMachine.gd"
 var PlayerArrow = load("res://Player/Arrow/PlayerArrow.tscn")
 var arrow_offset = Vector2(24, -12)
 
+var can_roll = true
 var roll_invin = false
 var hit_invin = false
 
@@ -13,7 +14,8 @@ func _ready():
 	Player.BlinkTimer.connect("timeout", self,"invin_blink")
 	Player.HurtTimer.connect("timeout", self, "hurt_timout")
 	Player.InvinTimer.connect("timeout", self, "invin_timeout")
-	Player.PlayerArea.connect("body_enter", self, "hit_enemy")
+	Player.RollTimer.connect("timeout", self, "roll_timeout")
+	Player.PlayerArea.connect("body_enter", self, "enemy_body_enter")
 	Player.PlayerArea.connect("body_exit", self, "enemy_body_exit")
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
 	set_current_state("idle")
@@ -26,7 +28,7 @@ func idle_exit(): pass
 func idle_update():
 	if (!Player.PlayerMovement.on_ground):
 		set_current_state("jump")
-	elif (Input.is_action_pressed("key_roll")):
+	elif (can_roll and Input.is_action_pressed("key_roll")):
 		set_current_state("roll")
 	elif(Input.is_action_pressed("key_shoot")):
 		set_current_state("shoot")
@@ -41,7 +43,7 @@ func walk_exit(): pass
 func walk_update():
 	if (!Player.PlayerMovement.on_ground):
 		set_current_state("jump")
-	elif (Input.is_action_pressed("key_roll")):
+	elif (can_roll and Input.is_action_pressed("key_roll")):
 		set_current_state("roll")
 	elif(Input.is_action_pressed("key_shoot")):
 		set_current_state("shoot")
@@ -72,17 +74,23 @@ func roll_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("roll")
 	roll_invin = true
+	can_roll = false
 func roll_exit():
+	Player.RollTimer.start()
 	roll_invin = false
 func roll_update():
 	Player.PlayerMovement.roll_update()
+	
+func roll_timeout():
+	can_roll = true
 		
 func shoot_enter():
 	Player.PlayerSprites.set_frame(0)
 	Player.PlayerSprites.set_animation("shoot")
 	Player.PlayerMovement.stop_moving()
 func shoot_exit(): pass
-func shoot_update(): pass
+func shoot_update():
+	Player.PlayerMovement.knockback_update()
 	
 func hurt_enter():
 	Player.PlayerSprites.set_frame(0)
@@ -110,10 +118,8 @@ func spawn_player_arrow():
 	Game.add_child(inst)
 	
 func _is_moving():
-	if (Input.is_action_pressed("key_right") or
-		Input.is_action_pressed("key_left")):
-			return true
-	return false
+	return (Input.is_action_pressed("key_right") - 
+			Input.is_action_pressed("key_left") != 0)
 	
 func invin_blink():
 	if (hit_invin):
@@ -124,15 +130,15 @@ func invin_blink():
 		Player.BlinkTimer.stop()
 		Player.PlayerSprites.show()
 	
-func hit_enemy(body):
-	if (body.is_in_group("enemy") && not body.is_dead):
+func enemy_body_enter(body):
+	if (body.is_in_group("enemy") && not body.get_parent().is_dead):
 		overlap_enemy = true
-		last_enemy_hit = body
+		last_enemy_hit = body.get_parent()
 	
 func enemy_body_exit(body):
 	if (last_enemy_hit == null):
 		overlap_enemy = false
-	elif (body == last_enemy_hit):
+	elif (body.get_parent() == last_enemy_hit):
 		overlap_enemy = false
 	
 func hurt_by_enemy():
@@ -142,7 +148,6 @@ func hurt_by_enemy():
 			hit_invin = true
 			Player.InvinTimer.start()
 			Player.BlinkTimer.start()
-			set_current_state("hurt")
 			Player.PlayerMovement.knockback(last_enemy_hit.StateMachine.dir)
 	
 func hurt_timout():

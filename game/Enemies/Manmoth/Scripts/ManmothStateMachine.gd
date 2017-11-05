@@ -1,7 +1,7 @@
 extends "res://Global/StateMachine.gd"
 
 var MOVESPEED = 5
-var dir = -1
+var dir = 1
 
 var velocity = Vector2()
 
