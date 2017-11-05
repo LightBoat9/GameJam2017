@@ -20,6 +20,7 @@ func spawn_current():
 	return spawn_database()
 	
 func spawn_database():
+	return 100
 	print(stage)
 	if (stage == 0): # Shoot easy, No repeat
 		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 1, OFFSET["NORM"])
