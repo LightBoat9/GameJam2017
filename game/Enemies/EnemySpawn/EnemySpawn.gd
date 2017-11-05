@@ -3,10 +3,11 @@ extends "res://Global/Object.gd"
 onready var SpawnTimer = get_node("SpawnTimer")
 
 var Manmoth = load("res://Enemies/Manmoth/EnemyManmoth.tscn")
+var TimeLine = load("res://Enemies/EnemySpawn/SpawnerTimeline.gd").new()
 
 var OFFSET = 128
 
-enum ENEMY {MANMOTH}
+enum ENEMY {MANMOTH, SPEARFISCHER}
 enum SIDE {LEFT, RIGHT}
 
 var RIGHT_SPAWN =  Vector2(864, 225)
@@ -15,10 +16,12 @@ var LEFT_SPAWN =  Vector2(-64, 225)
 func _ready():
 	SpawnTimer.start()
 	SpawnTimer.connect("timeout", self, "spawn_timeout")
-	
+	add_child(TimeLine)
+
 func spawn_timeout():
-	spawn_enemy(ENEMY.MANMOTH, SIDE.LEFT, 2, OFFSET)
-	
+	var time = TimeLine.spawn_current()
+	SpawnTimer.set_wait_time(time)
+
 func spawn_enemy(type, side, num, OFFSET):
 	for i in range(num):
 		var inst
