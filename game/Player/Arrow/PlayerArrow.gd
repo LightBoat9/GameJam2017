@@ -30,7 +30,7 @@ func outside_view():
 		destroy()
 	
 func enemy_enter(body):
-	body = body.get_parent()
+	if (body.get_name() != "Beowulf"): body = body.get_parent()
 	if (body.is_in_group("enemy")):
 		if (not body.is_dead):
 			body.StateMachine.set_current_state("hurt")
