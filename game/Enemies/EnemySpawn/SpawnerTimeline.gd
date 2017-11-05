@@ -2,6 +2,7 @@ extends Node
 
 var stage = 0; var repeat = 0
 var parent
+var special
 
 var OFFSET = 128
 

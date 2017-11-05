@@ -23,11 +23,13 @@ func spawn_timeout():
 	SpawnTimer.set_wait_time(time)
 
 func spawn_enemy(type, side, num, OFFSET):
+	var inst
 	for i in range(num):
-		var inst
 		if (type == ENEMY.MANMOTH):
 			inst = Manmoth.instance()
-			
+		
+		Game.add_child(inst)
+		
 		if (side == SIDE.LEFT):
 			inst.set_pos(Vector2(LEFT_SPAWN.x - (OFFSET * i), LEFT_SPAWN.y))
 			inst.set_dir(1)
@@ -35,5 +37,5 @@ func spawn_enemy(type, side, num, OFFSET):
 			inst.set_pos(Vector2(RIGHT_SPAWN.x + (OFFSET * i), RIGHT_SPAWN.y))
 			inst.set_dir(-1)
 		
-		Game.add_child(inst)
-	
+		inst = null
+	return inst
