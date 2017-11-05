@@ -1,5 +1,7 @@
 extends "res://Global/StateMachine.gd"
 
+var Spear = load("res://Enemies/Spearfischer/Spear/Spear.tscn")
+
 var velocity
 
 var dir = -1
@@ -24,6 +26,7 @@ onready var screen_top = 0 - ROOF_HEIGHT + SPRITE_HEIGHT/2
 onready var screen_bot = get_viewport_rect().size.y - SPRITE_HEIGHT/2 - FLOOR_HEIGHT - OFFSET
 
 func _ready():
+	get_parent().Sprites.connect("frame_changed", self, "frame_changed")
 	get_parent().HurtTimer.connect("timeout", self, "hurt_timeout")
 	set_current_state("leap")
 
@@ -79,3 +82,16 @@ func stop_outside_room():
 
 func get_trajectory(length, height, time):
 	return Vector2(length/time, -(height/time + time/2))
+	
+func frame_changed():
+	var a = get_parent().Sprites.get_animation()
+	if (a == "attack"):
+		if (get_parent().Sprites.get_frame() == 2):
+			spawn_spear()
+			
+func spawn_spear():
+	var inst = Spear.instance()
+	inst.set_pos(get_parent().get_pos())
+	var player_dist = abs(Player.get_pos().x - get_parent().get_pos().x)
+	inst.velocity = get_trajectory(player_dist * dir, 48, 48)
+	Game.add_child(inst)
