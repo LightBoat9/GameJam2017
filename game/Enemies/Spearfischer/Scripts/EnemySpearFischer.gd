@@ -25,4 +25,4 @@ func outside_view():
 	
 func set_dir(value):
 	StateMachine.dir = value
-	get_node("SpearFischerSprites").set_flip_h(value == 1)
+	get_node("Sprites").set_flip_h(value == 1)

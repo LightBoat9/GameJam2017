@@ -15,6 +15,8 @@ var last_enemy_hit = null
 var hp = 3
 var max_hp = 3
 
+var game; var environ; var spawner;
+
 func _ready():
 	Player.BlinkTimer.connect("timeout", self,"invin_blink")
 	Player.HurtTimer.connect("timeout", self, "hurt_timout")
@@ -25,6 +27,9 @@ func _ready():
 	Player.PlayerArea.connect("body_exit", self, "enemy_body_exit")
 	Player.PlayerSprites.connect("frame_changed", self, "frame_changed")
 	set_current_state("idle")
+	
+	environ = Game.get_node("Environment")
+	if environ == null : print("environment not found")
 	
 func _process(delta):
 	hurt_by_enemy()
@@ -145,7 +150,7 @@ func enemy_body_enter(body):
 		overlap_enemy = true
 		last_enemy_hit = body.get_parent()
 	elif (body.is_in_group("projectile")):
-		if (not hit_invin && not roll_invin):
+		if (not hit_invin && not roll_invin && hp>0):
 			set_current_state("hurt")
 			hit_invin = true
 			Player.InvinTimer.start()
@@ -161,7 +166,7 @@ func enemy_body_exit(body):
 func hurt_by_enemy():
 	if (last_enemy_hit == null): return
 	if (overlap_enemy):
-		if (not hit_invin && not roll_invin):
+		if (not hit_invin && not roll_invin && hp>0):
 			set_current_state("hurt")
 			hit_invin = true
 			Player.InvinTimer.start()
@@ -181,7 +186,9 @@ func handle_hp():
 	if (hp > 0): 
 		hp -= 1
 		Player.HUD.get_node("PlayerHearts").remove = true
-	if (hp <= 0): print("Player Died")
+	if (hp <= 0): 
+		print("Player Died")
+		if environ != null : environ.reset_stage(false)
 	
 func heal():
 	hp = 3

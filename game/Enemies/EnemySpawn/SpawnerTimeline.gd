@@ -16,10 +16,41 @@ enum SIDE {LEFT, RIGHT}
 func _ready():
 	parent = get_parent()
 
-func spawn_current():
-	return spawn_database()
-	
-func spawn_database():
+func spawn_current(act):
+	if act == 1:
+		return spawn_act1()
+	elif act == 2:
+		return spawn_act2()
+	else: return 3
+
+func on_playerDead():
+	stage = 0
+	if !special.get_ref(): special.get_ref().set_current_state("exit")
+
+func spawn_act2():
+	print(stage)
+	if (stage ==0):
+		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 1, OFFSET["NORM"])
+		special = weakref(parent.spawn_enemy(ENEMY.SPEARFISCHER, SIDE.RIGHT, 1 , OFFSET["NORM"]))
+		stage+=1
+		return 3
+	elif(stage == 1):
+		print(special)
+		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 1, OFFSET["NORM"])
+		if !special.get_ref(): stage+=1
+		return 3
+	elif (stage == 2):
+		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 2, OFFSET["NORM"])
+		special = weakref(parent.spawn_enemy(ENEMY.SPEARFISCHER, SIDE.RIGHT, 1 , OFFSET["NORM"]))
+		stage+=1
+		return 3
+	elif(stage == 3):
+		print(special)
+		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 2, OFFSET["NORM"])
+		if !special.get_ref(): stage+=1
+		return 3
+
+func spawn_act1():
 	print(stage)
 	if (stage == 0): # Shoot easy, No repeat
 		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 1, OFFSET["NORM"])
@@ -71,7 +102,7 @@ func spawn_database():
 	elif (stage == 10): ## P2: Roll hard, No repeat
 		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 4, OFFSET["ROLL"])
 		stage += 1
-		return 100
-	elif (stage == 11): ### P3: Jump easy, No repeat
-		parent.spawn_enemy(ENEMY.MANMOTH, SIDE.RIGHT, 1, OFFSET["ROLL"])
-		return 100
+		return 4
+	elif(stage == 11):
+		parent.end_act()
+		return 1

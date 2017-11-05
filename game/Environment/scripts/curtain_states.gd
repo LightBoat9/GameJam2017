@@ -4,7 +4,7 @@ var raised = false
 var minY; var maxY
 var curtains
 var rate = 4
-var delay_default = 30; var delay_current = 0
+var delay_default = 60; var delay_current = 0
 var environ
 
 func _ready():
