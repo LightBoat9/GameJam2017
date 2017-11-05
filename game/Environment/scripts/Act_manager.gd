@@ -6,6 +6,7 @@ var current
 func _ready():
 	acts.append(get_node("Act1"))
 	acts.append(get_node("Act2"))
+	acts.append(get_node("Act3"))
 	current = 0
 	
 	for act in acts:
