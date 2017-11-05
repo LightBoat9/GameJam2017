@@ -28,9 +28,9 @@ func outside_view():
 	var s = get_viewport_rect().size
 	if (p.x > s.x || p.x < 0):
 		destroy()
-		
+	
 func enemy_enter(body):
-	if (body.get_name() != "Beowulf"): body = body.get_parent()
+	body = body.get_parent()
 	if (body.is_in_group("enemy")):
 		if (not body.is_dead):
 			body.StateMachine.set_current_state("hurt")

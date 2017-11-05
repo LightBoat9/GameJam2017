@@ -50,6 +50,7 @@ offset = Vector2( 0, -5 )
 
 frames = SubResource( 1 )
 animation = "walk"
+frame = 2
 playing = true
 
 [node name="HurtTimer" type="Timer" parent="."]
