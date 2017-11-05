@@ -1,14 +1,15 @@
 extends "res://Enemies/Enemy.gd"
 
-onready var SpearFischerCollision = get_node("SpearFischerCollision")
-onready var SpearFischerSprites = get_node("SpearFischerSprites")
-onready var SpearFischerHitbox = get_node("SpearFischerHitbox")
+onready var Sprites = get_node("Sprites")
+onready var HitBox = get_node("HitBox")
+
 onready var HurtTimer = get_node("HurtTimer")
-
-var is_dead = false
-
-var StateMachine = (
-	load("res://Enemies/SpearFischer/Scripts/SpearFischerStateMachine.gd").new()) #setget set_private
 	
 func _ready():
+	var path = "res://Enemies/SpearFischer/Scripts/SpearFischerStateMachine.gd"
+	StateMachine = (load(path).new())
 	add_child(StateMachine)
+	
+func set_dir(value):
+	StateMachine.dir = value
+	get_node("SpearFischerSprites").set_flip_h(value == 1)
